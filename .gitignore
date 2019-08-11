@@ -1,2 +1,3 @@
 # Exclude webpack generated dir because security (cfr development server)
 /Code-examples/Section_6_Real_Development_Workflow
+/Code-examples/homework

@@ -50,7 +50,7 @@ var vm = new Vue({
 
 **watch vs methods/computed**
 
-**watch** gives us the ability to react to changes. Big difference with methods or computed is that watch is **'asynchronous'**. Incase of methods or computed all the code is executed **'synchrounous' !**. Use case of watch and needed asynchronous behavoiur are the start of a timer (cfr setTimeout(function,time)) or a API call.
+**watch** gives us the ability to react to changes. Big difference with methods or computed is that watch is **'asynchronous'**. Incase of methods or computed all the code is executed **'synchrounous' !**. Use case of watch and needed asynchronous behaviour are the start of a timer (cfr setTimeout(function,time)) or a API call.
 
 What is Vue ?
 
@@ -59,27 +59,21 @@ What is Vue ?
 
 ## 2 Basic skelet
 
-```javascript
+```html
 // index.html
 <html>
   <head>
-     <title> My first Vue site </title>
-     <script src="app.js"></script>
+    <title>My first Vue site</title>
+    // vue development version - for debug - not production
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id="#myApp">
-      <p> temp = {{temerature}} </p>
+      <p>temp = {{temerature}}</p>
     </div>
+    <script src="app.js"></script>
   </body>
 </html>
-
-// app.js
-var app = new Vue ({
-  el: '#myApp',
-  data: {
-    temperature: 21
-  }
-}
 ```
 
 ```javascript
@@ -96,7 +90,7 @@ var app = new Vue ({
 ## 3 directives
 
 - are 'instructions'
-- directives are prefixed with '-v' (eg: 'v-bind')
+- directives are prefixed with 'v-' (eg: 'v-bind')
 - they indicate special reactive behaviour to render the DOM.
 - they 'bind' dynamicly data to html.
 - you can als make your own directives.
@@ -198,10 +192,10 @@ v-bind -> typically used to make the Html dynamic (cfr add classes, change conte
 ```
   With 'v-on' we can listen to a event of the context and trigger a function that was declared in the Vue object
 
-  `<button v-on:click = "increamentMyCounter">Add</button>`
+  `<button v-on:click = "incrementMyCounter">Add</button>`
 ```
 
-**Remark:**The event is always passed within the function. Pay attention because in the function we have to use 'this.x' (not 'x' ) in case 'x' is a variable (cfr 'data:') in the Vue object.
+**Remark:** The event is always passed within the function. Pay attention because in the function we have to use 'this.x' (not 'x' ) in case 'x' is a variable (cfr 'data:') in the Vue object.
 
 `<p v-on:mousemove = "updateCoordinates">x = {{x}} y = {{y}}</p>`
 
@@ -241,19 +235,69 @@ A other use case for event modifiers is with the keyup event
 
 see chapter 27-33
 
-## 4.1 Basic
+## 4.1 Basic (chapter 27)
 
-see example: Getting-Started-Vue/Code-examples/Dynamic-css-snippet/Basics
+Use **':class={className:boolean}'**, where via v-bind (cfr':'), we will add a class 'className', when boolean condition is true.
 
-## 4.2 Using Objects
+```html
+<div class="Rect" @click="isRed=!isRed" :class="{red:isRed}">...</div>
+<div class="Rect" @click="isRed=!isRed" :class="{red:isRed, blue:!Red}">..</div>
+```
 
-see example: Getting-Started-Vue/Code-examples/Dynamic-css-snippet/Using-Objects
+see example: Getting-Started-Vue/Code-examples/Section_2_Dynamic_Styling/1_Basic
 
-## 4.3 Using Names
+## 4.2 Using Objects (chapter 28)
 
-see example: Getting-Started-Vue/Code-examples/Dynamic-css-snippet/Using-Names
+If it gets complex or you dont want the logic in your html code, as in 4.1, we can mut the logic in a (computed) function of our Vue object. The function return a object '{red:isRed, blue:!isRed}'.
+
+```html
+<div class="Rect" @click="isRed=!isRed" :class="computeDivClasses">...</div>
+```
+
+```javascript
+var vm = new Vue({
+  el: 'myVueApp',
+  data: {
+    isRed: false
+  },
+  computed: {
+    computeDivClasses: function(event) {
+      return {
+        red: this.isRed,
+        blue: !this.isRed
+      };
+    }
+  }
+});
+```
+
+see example: Getting-Started-Vue/Code-examples/Section_2_Dynamic_Styling/2_Using_Objects
+
+## 4.3 Using Names (chapter 29)
+
+Instead of using a boolean condition in order to attach pre-defined class, we now want to attach any class In the code below we type the name of any css class, and it will be attached.
+
+```html
+<div class="Rect" :class="color">...</div>
+<input type="text" v-model="color" />
+```
+
+```javascript
+var vm = new Vue({
+  el: 'myVueApp',
+  data: {
+    color: 'green'
+  }
+});
+```
+
+**Remark:** We can also mix different approaches, object + direct (4.3 + 4.1)
 
 ## 4.4 using Arrays
+
+We can also mix different approaches, object + direct (4.3 + 4.1)
+
+**Remark:** In case of 2 competing CSS classes, eg 'red and green' than the sequence in css determins who wins (last in css)
 
 ```
 <div :class = "["myClass",{red:isRedTrue}]">..</div>    -> cfr use-case progressbar
@@ -263,8 +307,12 @@ see example: Getting-Started-Vue/Code-examples/Dynamic-css-snippet/Using-Arrays
 
 ## 4.5 Using Styles
 
+We can also directly attach or change style properties! In this example we input any color and bind it to the backgroundcolor We can directly change the 'style' with the logic in the html or we can put it into a method and this rreturns or change a style object.
+
 ```
-<div :style = "myStyle">..</div>    -> cfr use-case progressbar
+<div :style = "{'background-color':color}">..</div>    -> remark! '' because - is not valid char in property name
+<div :style = "{backgroundColor:color}">..</div>      -> remlark: we can us camelCase as alternative of ''
+<div :style = "myStyle">..</div>    -> cfr use-case progressbar, where mystyle returns {width:x}
 ```
 
 see example: Getting-Started-Vue/Code-examples/Dynamic-css-snippet/Using-Styles

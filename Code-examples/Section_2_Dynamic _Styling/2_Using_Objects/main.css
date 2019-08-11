@@ -1,0 +1,29 @@
+#myFlexbox {
+  display: flex;
+  background-color: #eee;
+}
+
+.Rect {
+  display: flex;
+  background-color: #ddd;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+
+  align-items: center;
+  justify-content: center;
+}
+.Rect span {
+  display: block;
+  text-align: center;
+}
+
+.red {
+  background-color: Red;
+}
+.green {
+  background-color: Green;
+}
+.blue {
+  background-color: Blue;
+}

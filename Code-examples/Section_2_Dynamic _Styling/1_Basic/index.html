@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dynamic CSS Basic</title>
+    <link rel="stylesheet" href="main.css" />
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="myApp">
+      <div id="myFlexbox">
+        <div class="Rect" @click="isRed=!isRed" :class="{red:isRed}"><span >Rect 1</span></div>
+        <div class="Rect"@click="toggle" :class="{green:isGreen}"><span class="">Rect 2</span></div>
+        <div class="Rect"><span class="">Rect 3</span></div>
+      </div>
+      <button type="button" v-on:click="toggle">Toggle</button>
+      <div>Color is :{{ isRed }}</div>
+    </div>
+    <script
+      src = 'app.js'></script>;
+    </script>
+  </body>
+</html>
